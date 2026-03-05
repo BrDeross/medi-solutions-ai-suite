@@ -1,0 +1,210 @@
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Library — Medi‑Solutions AI Agent Suite</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="row between" style="gap:14px; flex-wrap:wrap">
+        <div class="row" style="gap:12px">
+          <div class="badge"><span class="dot good"></span><strong>Medi‑Solutions</strong> <span class="muted small">AI Agent Suite (Prototype)</span></div>
+          <div class="badge"><span class="dot"></span><span id="brandLabel">—</span></div>
+          <div class="badge"><span class="dot"></span><span id="roleLabel">AGENT</span></div>
+          <div class="badge"><span class="dot"></span><span id="complianceLabel">Compliance: On</span></div>
+        </div>
+        <div class="row" style="flex-wrap:wrap; justify-content:flex-end">
+          <select id="brandSelect" class="input" style="width:180px">
+            <option>Medi‑Solutions</option>
+            <option>First Jersey</option>
+            <option>Neutral Medicare Advisor</option>
+          </select>
+          <select id="roleSelect" class="input" style="width:140px">
+            <option value="agent">Agent</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button class="btn" id="toggleCompliance">Compliance</button>
+          <button class="btn" id="toggleTheme">Theme: <span id="themeLabel">Dark</span></button>
+        </div>
+      </div>
+      <div class="row between" style="margin-top:12px; gap:12px; flex-wrap:wrap">
+        <div class="nav" style="flex:1">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="content-engine.html">Content Engine</a>
+          <a href="sales-coach.html">Sales Coach</a>
+          <a href="client-tools.html">Client Tools</a>
+          <a href="snapshot-builder.html">Snapshot Builder</a>
+          <a href="leads.html">Lead Inbox</a>
+          <a href="library.html">Library</a>
+          <a href="admin.html" data-role="admin,manager">Admin</a>
+        </div>
+        <div class="badge" style="min-width:260px">
+          <span class="dot warn"></span>
+          <div class="col" style="gap:2px">
+            <div class="small"><strong id="weeklyThemeTitle">Weekly Theme</strong></div>
+            <div class="muted small" id="weeklyThemeFocus">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+<div class="row between" style="align-items:flex-end; flex-wrap:wrap">
+  <div>
+    <div class="h1">Training + Library</div>
+    <div class="muted">Approved scripts, compliance phrases, and playbooks.</div>
+  </div>
+  <div class="row" style="flex-wrap:wrap">
+    <button class="btn" id="addItem" data-role="admin,manager">Add item</button>
+    <button class="btn" id="exportLib">Export (JSON)</button>
+  </div>
+</div>
+
+<div class="card pad" style="margin-top:16px">
+  <div class="row between">
+    <div>
+      <div class="h2">Library</div>
+      <div class="muted small">Saved locally for this prototype.</div>
+    </div>
+    <input class="input" id="q" style="max-width:300px" placeholder="Search…"/>
+  </div>
+  <hr/>
+  <div id="lib"></div>
+</div>
+
+<div id="libModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:100">
+  <div class="container" style="max-width:980px; margin-top:60px">
+    <div class="card pad">
+      <div class="row between">
+        <div class="h2">Library Item</div>
+        <button class="btn" id="closeLib">Close</button>
+      </div>
+      <hr/>
+      <div class="grid cols-2">
+        <div>
+          <label>Type</label>
+          <select class="input" id="liType">
+            <option>Script</option><option>Compliance</option><option>Playbook</option><option>Template</option>
+          </select>
+          <label style="margin-top:10px">Title</label>
+          <input class="input" id="liTitle"/>
+        </div>
+        <div>
+          <label>Body</label>
+          <textarea class="input" id="liBody"></textarea>
+        </div>
+      </div>
+      <div class="row" style="margin-top:12px; flex-wrap:wrap">
+        <button class="btn primary" id="saveLib">Save</button>
+        <button class="btn danger" id="deleteLib">Delete</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="footer muted">
+      Prototype only (localStorage). Perfect for GitHub Pages demos; plug in CRM/SMS/AI later.
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const s = MS.loadState();
+      const t = document.getElementById("weeklyThemeTitle");
+      const f = document.getElementById("weeklyThemeFocus");
+      if(t) t.textContent = s.weeklyTheme.title || "Weekly Theme";
+      if(f) f.textContent = s.weeklyTheme.focus || "";
+    });
+  </script>
+  
+<script>
+function render(){
+  const s = MS.loadState();
+  const q = (document.getElementById("q").value||"").toLowerCase();
+  const items = (s.library||[]).filter(x=>{
+    const blob = (x.title+" "+x.body+" "+x.type).toLowerCase();
+    return !q || blob.includes(q);
+  });
+  const rows = items.map(i=>`<tr>
+    <td><span class="pill">${MS.escapeHtml(i.type)}</span></td>
+    <td>${MS.escapeHtml(i.title)}</td>
+    <td class="small muted">${MS.escapeHtml((i.body||"").slice(0,60))}${(i.body||"").length>60?"…":""}</td>
+    <td><button class="btn" data-open="${i.id}">Open</button></td>
+  </tr>`).join("");
+  document.getElementById("lib").innerHTML = `
+    <table class="table">
+      <thead><tr><th>Type</th><th>Title</th><th>Preview</th><th></th></tr></thead>
+      <tbody>${rows}</tbody>
+    </table>`;
+  document.querySelectorAll("button[data-open]").forEach(b=>b.onclick=()=>openItem(b.dataset.open));
+}
+function openItem(id){
+  const s = MS.loadState();
+  const it = s.library.find(x=>x.id===id);
+  if(!it) return;
+  window.__libId = id;
+  document.getElementById("liType").value = it.type;
+  document.getElementById("liTitle").value = it.title;
+  document.getElementById("liBody").value = it.body;
+  document.getElementById("libModal").style.display="block";
+}
+function close(){ document.getElementById("libModal").style.display="none"; }
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  document.getElementById("q").addEventListener("input", render);
+  const add = document.getElementById("addItem");
+  if(add){
+    add.onclick=()=>{
+      window.__libId = null;
+      document.getElementById("liType").value="Script";
+      document.getElementById("liTitle").value="";
+      document.getElementById("liBody").value="";
+      document.getElementById("libModal").style.display="block";
+    };
+  }
+  document.getElementById("closeLib").onclick=close;
+
+  document.getElementById("saveLib").onclick=()=>{
+    const payload = {
+      type: document.getElementById("liType").value,
+      title: document.getElementById("liTitle").value,
+      body: document.getElementById("liBody").value
+    };
+    MS.updateState(st=>{
+      if(window.__libId){
+        const it = st.library.find(x=>x.id===window.__libId);
+        if(it) Object.assign(it, payload);
+      }else{
+        st.library.unshift(Object.assign({id: MS.uid()}, payload));
+      }
+    });
+    MS.toast("Saved.");
+    close(); render();
+  };
+
+  document.getElementById("deleteLib").onclick=()=>{
+    if(!window.__libId){ close(); return; }
+    MS.updateState(st=>{ st.library = st.library.filter(x=>x.id!==window.__libId); });
+    MS.toast("Deleted.");
+    close(); render();
+  };
+
+  document.getElementById("exportLib").onclick=()=>{
+    const s = MS.loadState();
+    MS.copyToClipboard(JSON.stringify(s.library||[], null, 2));
+  };
+
+  render();
+});
+</script>
+
+</body>
+</html>

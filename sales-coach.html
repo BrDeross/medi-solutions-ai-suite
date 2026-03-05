@@ -1,0 +1,220 @@
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Sales Coach — Medi‑Solutions AI Agent Suite</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="row between" style="gap:14px; flex-wrap:wrap">
+        <div class="row" style="gap:12px">
+          <div class="badge"><span class="dot good"></span><strong>Medi‑Solutions</strong> <span class="muted small">AI Agent Suite (Prototype)</span></div>
+          <div class="badge"><span class="dot"></span><span id="brandLabel">—</span></div>
+          <div class="badge"><span class="dot"></span><span id="roleLabel">AGENT</span></div>
+          <div class="badge"><span class="dot"></span><span id="complianceLabel">Compliance: On</span></div>
+        </div>
+        <div class="row" style="flex-wrap:wrap; justify-content:flex-end">
+          <select id="brandSelect" class="input" style="width:180px">
+            <option>Medi‑Solutions</option>
+            <option>First Jersey</option>
+            <option>Neutral Medicare Advisor</option>
+          </select>
+          <select id="roleSelect" class="input" style="width:140px">
+            <option value="agent">Agent</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button class="btn" id="toggleCompliance">Compliance</button>
+          <button class="btn" id="toggleTheme">Theme: <span id="themeLabel">Dark</span></button>
+        </div>
+      </div>
+      <div class="row between" style="margin-top:12px; gap:12px; flex-wrap:wrap">
+        <div class="nav" style="flex:1">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="content-engine.html">Content Engine</a>
+          <a href="sales-coach.html">Sales Coach</a>
+          <a href="client-tools.html">Client Tools</a>
+          <a href="snapshot-builder.html">Snapshot Builder</a>
+          <a href="leads.html">Lead Inbox</a>
+          <a href="library.html">Library</a>
+          <a href="admin.html" data-role="admin,manager">Admin</a>
+        </div>
+        <div class="badge" style="min-width:260px">
+          <span class="dot warn"></span>
+          <div class="col" style="gap:2px">
+            <div class="small"><strong id="weeklyThemeTitle">Weekly Theme</strong></div>
+            <div class="muted small" id="weeklyThemeFocus">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+<div class="row between" style="align-items:flex-end; flex-wrap:wrap">
+  <div>
+    <div class="h1">Sales Coach</div>
+    <div class="muted">Objection handling, call scripts, and roleplay practice.</div>
+  </div>
+  <div class="badge"><span class="dot good"></span><span class="small">Try “Roleplay Mode” below</span></div>
+</div>
+
+<div class="grid cols-2" style="margin-top:16px">
+  <div class="card pad">
+    <div class="h2">Objection Lab</div>
+    <div class="muted small">Pick an objection and get a structured response.</div>
+    <hr/>
+    <label>Objection</label>
+    <select id="objection" class="input">
+      <option>It's free</option>
+      <option>Cheapest plan</option>
+      <option>I'll wait</option>
+      <option>Still working</option>
+    </select>
+    <div style="margin-top:10px">
+      <label>Style</label>
+      <select id="style" class="input">
+        <option>Consultative</option>
+        <option>Direct</option>
+        <option>Story</option>
+      </select>
+    </div>
+    <div class="row" style="margin-top:12px; flex-wrap:wrap">
+      <button class="btn primary" id="genResponse">Generate response</button>
+      <button class="btn" id="copyResponse">Copy</button>
+    </div>
+    <div class="card pad" style="margin-top:12px">
+      <div class="h3">Response</div>
+      <div class="copy" id="responseText">—</div>
+    </div>
+  </div>
+
+  <div class="card pad">
+    <div class="h2">Roleplay Mode</div>
+    <div class="muted small">Write what you’d say. The coach scores clarity + structure.</div>
+    <hr/>
+    <label>Your reply</label>
+    <textarea id="agentReply" class="input" placeholder="Type your reply to the client objection…"></textarea>
+    <div class="row" style="margin-top:10px; flex-wrap:wrap">
+      <button class="btn primary" id="score">Score my reply</button>
+      <button class="btn" id="copyRoleplayTemplate">Copy a suggested reply</button>
+    </div>
+    <div class="grid cols-2" style="margin-top:12px">
+      <div class="card pad">
+        <div class="h3">Score</div>
+        <div class="num" id="scoreNum" style="font-size:28px; font-weight:850">—</div>
+        <div class="muted small">Aim for 80+.</div>
+      </div>
+      <div class="card pad">
+        <div class="h3">Coach notes</div>
+        <div class="muted small" id="notes">—</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card pad" style="margin-top:16px">
+  <div class="h2">Call Script Builder</div>
+  <div class="muted small">Generate a quick call outline based on scenario.</div>
+  <hr/>
+  <div class="grid cols-3">
+    <div>
+      <label>Scenario</label>
+      <select id="scenario" class="input">
+        <option>Inbound snapshot lead</option>
+        <option>Turning 65 soon</option>
+        <option>Still working at 65</option>
+        <option>Annual review</option>
+      </select>
+    </div>
+    <div>
+      <label>Goal</label>
+      <select id="callGoal" class="input">
+        <option>Book appointment</option>
+        <option>Confirm eligibility/timing</option>
+        <option>Collect doctors & meds</option>
+      </select>
+    </div>
+    <div class="row" style="align-items:flex-end">
+      <button class="btn primary" id="genCall">Generate</button>
+      <button class="btn" id="copyCall">Copy</button>
+    </div>
+  </div>
+  <div class="card pad" style="margin-top:12px">
+    <div class="copy" id="callOut">—</div>
+  </div>
+</div>
+
+    <div class="footer muted">
+      Prototype only (localStorage). Perfect for GitHub Pages demos; plug in CRM/SMS/AI later.
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const s = MS.loadState();
+      const t = document.getElementById("weeklyThemeTitle");
+      const f = document.getElementById("weeklyThemeFocus");
+      if(t) t.textContent = s.weeklyTheme.title || "Weekly Theme";
+      if(f) f.textContent = s.weeklyTheme.focus || "";
+    });
+  </script>
+  
+<script src="assets/js/roleplay.js"></script>
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  const render = ()=>{
+    const objection = document.getElementById("objection").value;
+    const style = document.getElementById("style").value;
+    const text = Coach.generateObjectionResponse(objection, style);
+    document.getElementById("responseText").textContent = text;
+    window.__resp = text;
+  };
+
+  document.getElementById("genResponse").onclick=render;
+  document.getElementById("copyResponse").onclick=()=>MS.copyToClipboard(window.__resp || "");
+  render();
+
+  document.getElementById("score").onclick=()=>{
+    const txt = document.getElementById("agentReply").value;
+    const res = Coach.scoreReply(txt);
+    document.getElementById("scoreNum").textContent = res.score;
+    document.getElementById("notes").textContent = res.notes.join(" ");
+  };
+
+  document.getElementById("copyRoleplayTemplate").onclick=()=>{
+    MS.copyToClipboard(window.__resp || "");
+  };
+
+  document.getElementById("genCall").onclick=()=>{
+    const s = MS.loadState();
+    const scenario = document.getElementById("scenario").value;
+    const goal = document.getElementById("callGoal").value;
+    const out = [
+      `CALL OUTLINE — ${scenario}`,
+      ``,
+      `1) Opener (friendly + reason for call)`,
+      `2) 2 qualifying questions (still working? doctors/meds?)`,
+      `3) Explain the one key rule relevant to the scenario`,
+      `4) Set expectation: compare options in their zip + confirm eligibility`,
+      `5) Close: ${goal} (offer two time slots)`,
+      ``,
+      `CTA: Book here: ${s.settings.bookingUrl}`,
+      s.session.complianceMode ? `\n${s.templates.compliancePhrases[2]}` : ""
+    ].join("\n");
+    document.getElementById("callOut").textContent = out;
+    window.__call = out;
+  };
+
+  document.getElementById("copyCall").onclick=()=>MS.copyToClipboard(window.__call || "");
+});
+</script>
+
+</body>
+</html>

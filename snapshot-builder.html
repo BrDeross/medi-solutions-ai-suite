@@ -1,0 +1,248 @@
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Snapshot Builder — Medi‑Solutions AI Agent Suite</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="row between" style="gap:14px; flex-wrap:wrap">
+        <div class="row" style="gap:12px">
+          <div class="badge"><span class="dot good"></span><strong>Medi‑Solutions</strong> <span class="muted small">AI Agent Suite (Prototype)</span></div>
+          <div class="badge"><span class="dot"></span><span id="brandLabel">—</span></div>
+          <div class="badge"><span class="dot"></span><span id="roleLabel">AGENT</span></div>
+          <div class="badge"><span class="dot"></span><span id="complianceLabel">Compliance: On</span></div>
+        </div>
+        <div class="row" style="flex-wrap:wrap; justify-content:flex-end">
+          <select id="brandSelect" class="input" style="width:180px">
+            <option>Medi‑Solutions</option>
+            <option>First Jersey</option>
+            <option>Neutral Medicare Advisor</option>
+          </select>
+          <select id="roleSelect" class="input" style="width:140px">
+            <option value="agent">Agent</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button class="btn" id="toggleCompliance">Compliance</button>
+          <button class="btn" id="toggleTheme">Theme: <span id="themeLabel">Dark</span></button>
+        </div>
+      </div>
+      <div class="row between" style="margin-top:12px; gap:12px; flex-wrap:wrap">
+        <div class="nav" style="flex:1">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="content-engine.html">Content Engine</a>
+          <a href="sales-coach.html">Sales Coach</a>
+          <a href="client-tools.html">Client Tools</a>
+          <a href="snapshot-builder.html">Snapshot Builder</a>
+          <a href="leads.html">Lead Inbox</a>
+          <a href="library.html">Library</a>
+          <a href="admin.html" data-role="admin,manager">Admin</a>
+        </div>
+        <div class="badge" style="min-width:260px">
+          <span class="dot warn"></span>
+          <div class="col" style="gap:2px">
+            <div class="small"><strong id="weeklyThemeTitle">Weekly Theme</strong></div>
+            <div class="muted small" id="weeklyThemeFocus">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+<div class="row between" style="align-items:flex-end; flex-wrap:wrap">
+  <div>
+    <div class="h1">Snapshot Builder</div>
+    <div class="muted">Generate a personalized Medicare snapshot and save it to the Lead Inbox.</div>
+  </div>
+  <div class="row" style="flex-wrap:wrap">
+    <button class="btn" id="clearForm">Clear</button>
+    <a class="btn" href="leads.html">Go to Lead Inbox</a>
+  </div>
+</div>
+
+<div class="grid cols-2" style="margin-top:16px">
+  <div class="card pad">
+    <div class="h2">Client intake</div>
+    <div class="muted small">Fast inputs — keep it simple to reduce friction.</div>
+    <hr/>
+    <div class="grid cols-2">
+      <div>
+        <label>Name</label>
+        <input class="input" id="name" placeholder="Client name"/>
+      </div>
+      <div>
+        <label>Zip</label>
+        <input class="input" id="zip" placeholder="e.g., 07728"/>
+      </div>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:10px">
+      <div>
+        <label>Phone</label>
+        <input class="input" id="phone" placeholder="(###) ###‑####"/>
+      </div>
+      <div>
+        <label>Email</label>
+        <input class="input" id="email" placeholder="name@email.com"/>
+      </div>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:10px">
+      <div>
+        <label>Turning 65 (month/year)</label>
+        <input class="input" id="turning65" placeholder="e.g., 07/2026"/>
+      </div>
+      <div>
+        <label>Lead source</label>
+        <select class="input" id="source">
+          <option>AI Advisor</option>
+          <option>YouTube</option>
+          <option>Facebook</option>
+          <option>Instagram</option>
+          <option>TikTok</option>
+          <option>Google</option>
+          <option>Referral</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:10px">
+      <div>
+        <label>Still working?</label>
+        <select class="input" id="stillWorking">
+          <option>No</option>
+          <option>Yes</option>
+        </select>
+      </div>
+      <div>
+        <label>Employer size</label>
+        <select class="input" id="employerSize">
+          <option>20+</option>
+          <option>Under 20</option>
+          <option>Not sure</option>
+        </select>
+      </div>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:10px">
+      <div>
+        <label>Income bracket (for IRMAA screening)</label>
+        <select class="input" id="incomeBracket">
+          <option value="">Prefer not to say</option>
+          <option>Under $103k (single) / Under $206k (married)</option>
+          <option>$103k–$129k / $206k–$258k</option>
+          <option>$129k–$161k / $258k–$322k</option>
+          <option>$161k–$193k / $322k–$386k</option>
+          <option>$193k–$500k / $386k–$750k</option>
+          <option>$500k+ / $750k+</option>
+        </select>
+      </div>
+      <div>
+        <label>Prescription needs?</label>
+        <select class="input" id="meds">
+          <option>Not sure</option>
+          <option>Yes</option>
+          <option>No</option>
+        </select>
+      </div>
+    </div>
+
+    <div style="margin-top:10px">
+      <label>Goal / interest</label>
+      <select class="input" id="goal">
+        <option>Compare options</option>
+        <option>Leaning Advantage</option>
+        <option>Leaning Supplement</option>
+        <option>Just need timing guidance</option>
+      </select>
+    </div>
+
+    <div class="row" style="margin-top:12px; flex-wrap:wrap">
+      <button class="btn primary" id="gen">Generate Snapshot</button>
+      <button class="btn good" id="saveLead">Save to Lead Inbox</button>
+      <button class="btn" id="copySnap">Copy Snapshot</button>
+    </div>
+
+    <div class="muted small" style="margin-top:10px">Saved leads appear in Lead Inbox. No backend required for this prototype.</div>
+  </div>
+
+  <div class="card pad">
+    <div class="row between">
+      <div>
+        <div class="h2">Snapshot output</div>
+        <div class="muted small">Auto-generated summary you can email/text.</div>
+      </div>
+      <button class="btn" id="copyAll">Copy</button>
+    </div>
+    <hr/>
+    <div class="copy" id="out">—</div>
+  </div>
+</div>
+
+    <div class="footer muted">
+      Prototype only (localStorage). Perfect for GitHub Pages demos; plug in CRM/SMS/AI later.
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const s = MS.loadState();
+      const t = document.getElementById("weeklyThemeTitle");
+      const f = document.getElementById("weeklyThemeFocus");
+      if(t) t.textContent = s.weeklyTheme.title || "Weekly Theme";
+      if(f) f.textContent = s.weeklyTheme.focus || "";
+    });
+  </script>
+  
+<script src="assets/js/snapshot.js"></script>
+<script>
+function getForm(){
+  return {
+    name: document.getElementById("name").value,
+    zip: document.getElementById("zip").value,
+    phone: document.getElementById("phone").value,
+    email: document.getElementById("email").value,
+    turning65: document.getElementById("turning65").value,
+    source: document.getElementById("source").value,
+    stillWorking: document.getElementById("stillWorking").value,
+    employerSize: document.getElementById("employerSize").value,
+    incomeBracket: document.getElementById("incomeBracket").value,
+    meds: document.getElementById("meds").value,
+    goal: document.getElementById("goal").value
+  };
+}
+document.addEventListener("DOMContentLoaded", ()=>{
+  const out = document.getElementById("out");
+
+  document.getElementById("gen").onclick=()=>{
+    const snap = Snapshot.generateSnapshot(getForm());
+    out.textContent = snap;
+    window.__snap = snap;
+    MS.toast("Snapshot generated.");
+  };
+  document.getElementById("copySnap").onclick=()=>MS.copyToClipboard(window.__snap || "");
+  document.getElementById("copyAll").onclick=()=>MS.copyToClipboard(window.__snap || "");
+  document.getElementById("saveLead").onclick=()=>{
+    if(!window.__snap){ MS.toast("Generate snapshot first."); return; }
+    Snapshot.upsertLeadFromSnapshot(getForm(), window.__snap);
+    MS.toast("Saved to Lead Inbox.");
+  };
+  document.getElementById("clearForm").onclick=()=>{
+    ["name","zip","phone","email","turning65"].forEach(id=>document.getElementById(id).value="");
+    document.getElementById("incomeBracket").value="";
+    out.textContent="—";
+    window.__snap=null;
+  };
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,327 @@
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Content Engine — Medi‑Solutions AI Agent Suite</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="row between" style="gap:14px; flex-wrap:wrap">
+        <div class="row" style="gap:12px">
+          <div class="badge"><span class="dot good"></span><strong>Medi‑Solutions</strong> <span class="muted small">AI Agent Suite (Prototype)</span></div>
+          <div class="badge"><span class="dot"></span><span id="brandLabel">—</span></div>
+          <div class="badge"><span class="dot"></span><span id="roleLabel">AGENT</span></div>
+          <div class="badge"><span class="dot"></span><span id="complianceLabel">Compliance: On</span></div>
+        </div>
+        <div class="row" style="flex-wrap:wrap; justify-content:flex-end">
+          <select id="brandSelect" class="input" style="width:180px">
+            <option>Medi‑Solutions</option>
+            <option>First Jersey</option>
+            <option>Neutral Medicare Advisor</option>
+          </select>
+          <select id="roleSelect" class="input" style="width:140px">
+            <option value="agent">Agent</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button class="btn" id="toggleCompliance">Compliance</button>
+          <button class="btn" id="toggleTheme">Theme: <span id="themeLabel">Dark</span></button>
+        </div>
+      </div>
+      <div class="row between" style="margin-top:12px; gap:12px; flex-wrap:wrap">
+        <div class="nav" style="flex:1">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="content-engine.html">Content Engine</a>
+          <a href="sales-coach.html">Sales Coach</a>
+          <a href="client-tools.html">Client Tools</a>
+          <a href="snapshot-builder.html">Snapshot Builder</a>
+          <a href="leads.html">Lead Inbox</a>
+          <a href="library.html">Library</a>
+          <a href="admin.html" data-role="admin,manager">Admin</a>
+        </div>
+        <div class="badge" style="min-width:260px">
+          <span class="dot warn"></span>
+          <div class="col" style="gap:2px">
+            <div class="small"><strong id="weeklyThemeTitle">Weekly Theme</strong></div>
+            <div class="muted small" id="weeklyThemeFocus">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+<div class="row between" style="align-items:flex-end; flex-wrap:wrap">
+  <div>
+    <div class="h1">Content Engine</div>
+    <div class="muted">One topic → scripts & posts for every platform.</div>
+  </div>
+  <div class="row" style="flex-wrap:wrap">
+    <button class="btn" id="loadPack">Load Topic Pack</button>
+    <button class="btn danger" id="reset">Reset</button>
+  </div>
+</div>
+
+<div class="grid cols-2" style="margin-top:16px">
+  <div class="card pad">
+    <div class="h2">Build your content</div>
+    <div class="muted small">Pick a pillar + topic. The suite generates a full multi‑platform kit.</div>
+    <hr/>
+    <div class="grid cols-2">
+      <div>
+        <label>Pillar</label>
+        <select id="pillar" class="input"></select>
+      </div>
+      <div>
+        <label>Tone</label>
+        <select id="tone" class="input"></select>
+      </div>
+    </div>
+
+    <div style="margin-top:10px">
+      <label>Topic</label>
+      <input id="topic" class="input" placeholder="e.g., IRMAA explained in plain English"/>
+    </div>
+
+    <div style="margin-top:10px">
+      <label>Angle / promise</label>
+      <input id="angle" class="input" placeholder="e.g., Who it impacts + what to do next"/>
+    </div>
+
+    <div class="grid cols-2" style="margin-top:10px">
+      <div>
+        <label>Video length</label>
+        <select id="length" class="input">
+          <option>15s</option><option selected>30s</option><option>60s</option>
+        </select>
+      </div>
+      <div>
+        <label>CTA</label>
+        <input id="cta" class="input" placeholder="Leave blank to use default"/>
+      </div>
+    </div>
+
+    <div class="row" style="margin-top:12px; flex-wrap:wrap">
+      <button class="btn primary" id="generate">Generate Kit</button>
+      <button class="btn" id="saveDraft">Save Draft</button>
+      <button class="btn" id="submitApproval" data-role="manager,admin">Submit for Approval</button>
+    </div>
+
+    <div class="muted small" style="margin-top:10px">
+      Tip: Use Compliance toggle in the top bar for safer default language.
+    </div>
+  </div>
+
+  <div class="card pad">
+    <div class="row between">
+      <div>
+        <div class="h2">Output</div>
+        <div class="muted small">Copy/paste anywhere. (API-powered generation can replace this later.)</div>
+      </div>
+      <button class="btn" id="copyAll">Copy All</button>
+    </div>
+    <hr/>
+    <div class="col" style="gap:12px">
+      <div class="card pad">
+        <div class="row between">
+          <div class="h3">Short‑form video script</div>
+          <button class="btn" id="copyScript">Copy</button>
+        </div>
+        <div class="copy" id="outScript">—</div>
+      </div>
+
+      <div class="card pad">
+        <div class="row between">
+          <div class="h3">Instagram/Facebook caption</div>
+          <button class="btn" id="copyCaption">Copy</button>
+        </div>
+        <div class="copy" id="outCaption">—</div>
+      </div>
+
+      <div class="card pad">
+        <div class="row between">
+          <div class="h3">LinkedIn post</div>
+          <button class="btn" id="copyLinkedIn">Copy</button>
+        </div>
+        <div class="copy" id="outLinkedIn">—</div>
+      </div>
+
+      <div class="card pad">
+        <div class="row between">
+          <div class="h3">Email version</div>
+          <button class="btn" id="copyEmail2">Copy</button>
+        </div>
+        <div class="copy" id="outEmail">—</div>
+      </div>
+
+      <div class="card pad">
+        <div class="row between">
+          <div class="h3">Blog/SEO outline</div>
+          <button class="btn" id="copyBlog">Copy</button>
+        </div>
+        <div class="copy" id="outBlog">—</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="card pad" style="margin-top:16px">
+  <div class="row between">
+    <div>
+      <div class="h2">Recent Drafts</div>
+      <div class="muted small">Saved locally on this device.</div>
+    </div>
+    <button class="btn" id="refreshDrafts">Refresh</button>
+  </div>
+  <hr/>
+  <div id="drafts"></div>
+</div>
+
+    <div class="footer muted">
+      Prototype only (localStorage). Perfect for GitHub Pages demos; plug in CRM/SMS/AI later.
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const s = MS.loadState();
+      const t = document.getElementById("weeklyThemeTitle");
+      const f = document.getElementById("weeklyThemeFocus");
+      if(t) t.textContent = s.weeklyTheme.title || "Weekly Theme";
+      if(f) f.textContent = s.weeklyTheme.focus || "";
+    });
+  </script>
+  
+<script src="assets/js/content-engine.js"></script>
+<script>
+function fillSelect(id, items){
+  const el = document.getElementById(id);
+  el.innerHTML = items.map(x=>`<option>${x.name||x}</option>`).join("");
+}
+function renderDrafts(){
+  const s = MS.loadState();
+  const drafts = s.contentDrafts || [];
+  const rows = drafts.slice(0,8).map(d=>{
+    const p = d.payload || {};
+    return `<tr>
+      <td>${MS.escapeHtml(p.pillar||"")}</td>
+      <td>${MS.escapeHtml(p.topic||"")}</td>
+      <td><span class="pill ${d.status==="Submitted"?"warn":""}">${MS.escapeHtml(d.status||"Draft")}</span></td>
+      <td class="small muted">${MS.formatDate(d.createdAt)}</td>
+      <td><button class="btn" data-open="${d.id}">Open</button></td>
+    </tr>`;
+  }).join("");
+  document.getElementById("drafts").innerHTML = `
+    <table class="table">
+      <thead><tr><th>Pillar</th><th>Topic</th><th>Status</th><th>Created</th><th></th></tr></thead>
+      <tbody>${rows || ""}</tbody>
+    </table>`;
+  document.querySelectorAll("button[data-open]").forEach(b=>{
+    b.onclick = ()=>{
+      const s = MS.loadState();
+      const d = s.contentDrafts.find(x=>x.id===b.dataset.open);
+      if(!d) return;
+      document.getElementById("pillar").value = d.payload.pillar;
+      document.getElementById("tone").value = d.payload.tone;
+      document.getElementById("topic").value = d.payload.topic;
+      document.getElementById("angle").value = d.payload.angle;
+      document.getElementById("length").value = d.payload.length;
+      document.getElementById("cta").value = d.payload.cta || "";
+      setOutputs(d.outputs);
+      MS.toast("Draft loaded.");
+    };
+  });
+}
+function setOutputs(o){
+  document.getElementById("outScript").textContent = o?.script || "—";
+  document.getElementById("outCaption").textContent = o?.caption || "—";
+  document.getElementById("outLinkedIn").textContent = o?.linkedin || "—";
+  document.getElementById("outEmail").textContent = o?.email || "—";
+  document.getElementById("outBlog").textContent = o?.blog || "—";
+}
+document.addEventListener("DOMContentLoaded", ()=>{
+  const s = MS.loadState();
+  fillSelect("pillar", s.templates.pillars);
+  fillSelect("tone", s.templates.tones);
+
+  // Load one-click payload if present
+  const oc = localStorage.getItem("ms_oneclick_payload");
+  if(oc){
+    try{
+      const p = JSON.parse(oc);
+      document.getElementById("pillar").value = p.pillar || "Costs & Savings";
+      document.getElementById("topic").value = p.topic || "";
+      document.getElementById("angle").value = p.angle || "";
+      localStorage.removeItem("ms_oneclick_payload");
+    }catch(e){}
+  }
+
+  document.getElementById("loadPack").onclick=()=>{
+    const pack = s.templates.topicPacks[Math.floor(Math.random()*s.templates.topicPacks.length)];
+    document.getElementById("pillar").value = pack.pillar;
+    document.getElementById("topic").value = pack.topic;
+    document.getElementById("angle").value = pack.angle;
+  };
+  document.getElementById("reset").onclick=()=>{
+    ["topic","angle","cta"].forEach(id=>document.getElementById(id).value="");
+    setOutputs(null);
+  };
+
+  document.getElementById("generate").onclick=()=>{
+    const payload = {
+      pillar: document.getElementById("pillar").value,
+      tone: document.getElementById("tone").value,
+      topic: document.getElementById("topic").value || "Medicare tip",
+      angle: document.getElementById("angle").value,
+      length: document.getElementById("length").value,
+      cta: document.getElementById("cta").value
+    };
+    const out = ContentEngine.genOutputs(payload);
+    setOutputs(out);
+    window.__lastPayload = payload;
+    window.__lastOut = out;
+    MS.toast("Kit generated.");
+  };
+
+  document.getElementById("saveDraft").onclick=()=>{
+    if(!window.__lastPayload || !window.__lastOut){ MS.toast("Generate first."); return; }
+    ContentEngine.saveDraft(window.__lastPayload, window.__lastOut);
+    MS.toast("Draft saved.");
+    renderDrafts();
+  };
+
+  document.getElementById("submitApproval").onclick=()=>{
+    const s2 = MS.loadState();
+    const latest = s2.contentDrafts?.[0];
+    if(!latest){ MS.toast("Save a draft first."); return; }
+    ContentEngine.submitForApproval(latest.id);
+    MS.toast("Submitted for approval.");
+    renderDrafts();
+  };
+
+  const copyAll = ()=>{
+    const o = window.__lastOut;
+    if(!o){ MS.toast("Generate first."); return; }
+    const all = `=== SCRIPT ===\n${o.script}\n\n=== CAPTION ===\n${o.caption}\n\n=== LINKEDIN ===\n${o.linkedin}\n\n=== EMAIL ===\n${o.email}\n\n=== BLOG ===\n${o.blog}`;
+    MS.copyToClipboard(all);
+  };
+  document.getElementById("copyAll").onclick=copyAll;
+  document.getElementById("copyScript").onclick=()=>MS.copyToClipboard(document.getElementById("outScript").textContent);
+  document.getElementById("copyCaption").onclick=()=>MS.copyToClipboard(document.getElementById("outCaption").textContent);
+  document.getElementById("copyLinkedIn").onclick=()=>MS.copyToClipboard(document.getElementById("outLinkedIn").textContent);
+  document.getElementById("copyEmail2").onclick=()=>MS.copyToClipboard(document.getElementById("outEmail").textContent);
+  document.getElementById("copyBlog").onclick=()=>MS.copyToClipboard(document.getElementById("outBlog").textContent);
+
+  document.getElementById("refreshDrafts").onclick=renderDrafts;
+  renderDrafts();
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,177 @@
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Medi‑Solutions AI Agent Suite (Prototype)</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="row between" style="gap:14px; flex-wrap:wrap">
+        <div class="row" style="gap:12px">
+          <div class="badge"><span class="dot good"></span><strong>Medi‑Solutions</strong> <span class="muted small">AI Agent Suite (Prototype)</span></div>
+          <div class="badge"><span class="dot"></span><span id="brandLabel">—</span></div>
+          <div class="badge"><span class="dot"></span><span id="roleLabel">AGENT</span></div>
+          <div class="badge"><span class="dot"></span><span id="complianceLabel">Compliance: On</span></div>
+        </div>
+        <div class="row" style="flex-wrap:wrap; justify-content:flex-end">
+          <select id="brandSelect" class="input" style="width:180px">
+            <option>Medi‑Solutions</option>
+            <option>First Jersey</option>
+            <option>Neutral Medicare Advisor</option>
+          </select>
+          <select id="roleSelect" class="input" style="width:140px">
+            <option value="agent">Agent</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button class="btn" id="toggleCompliance">Compliance</button>
+          <button class="btn" id="toggleTheme">Theme: <span id="themeLabel">Dark</span></button>
+        </div>
+      </div>
+      <div class="row between" style="margin-top:12px; gap:12px; flex-wrap:wrap">
+        <div class="nav" style="flex:1">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="content-engine.html">Content Engine</a>
+          <a href="sales-coach.html">Sales Coach</a>
+          <a href="client-tools.html">Client Tools</a>
+          <a href="snapshot-builder.html">Snapshot Builder</a>
+          <a href="leads.html">Lead Inbox</a>
+          <a href="library.html">Library</a>
+          <a href="admin.html" data-role="admin,manager">Admin</a>
+        </div>
+        <div class="badge" style="min-width:260px">
+          <span class="dot warn"></span>
+          <div class="col" style="gap:2px">
+            <div class="small"><strong id="weeklyThemeTitle">Weekly Theme</strong></div>
+            <div class="muted small" id="weeklyThemeFocus">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+<div class="grid cols-2" style="margin-top:16px">
+  <div class="card pad">
+    <div class="h1">Medi‑Solutions AI Agent Suite</div>
+    <div class="muted">A working, click‑through prototype you can host on GitHub Pages today.</div>
+    <hr/>
+    <div class="h2">What’s included</div>
+    <ul class="muted" style="line-height:1.6">
+      <li><strong>Dashboard</strong>: KPIs, today’s focus, follow‑up templates</li>
+      <li><strong>Content Engine</strong>: 1 topic → scripts/posts/email/blog</li>
+      <li><strong>Sales Coach</strong>: objection lab + roleplay scoring</li>
+      <li><strong>Client Tools</strong>: IRMAA explainers + employer check</li>
+      <li><strong>Snapshot Builder</strong>: intake → snapshot → save to Lead Inbox</li>
+      <li><strong>Lead Inbox</strong>: status updates + next actions</li>
+      <li><strong>Library</strong>: scripts, compliance phrases, playbooks</li>
+      <li><strong>Admin</strong>: weekly theme + settings + approvals queue</li>
+    </ul>
+    <div class="row" style="margin-top:12px; flex-wrap:wrap">
+      <a class="btn primary" href="dashboard.html">Enter Suite</a>
+      <button class="btn" id="seed">Reset demo data</button>
+      <button class="btn" id="howto">GitHub Pages steps</button>
+    </div>
+  </div>
+
+  <div class="card pad">
+    <div class="h2">Quick start</div>
+    <div class="muted small">This prototype stores data in your browser (localStorage). No backend.</div>
+    <hr/>
+    <div class="card pad">
+      <div class="h3">Recommended flow demo</div>
+      <ol class="muted" style="line-height:1.7">
+        <li>Open <strong>Snapshot Builder</strong> and generate a snapshot.</li>
+        <li>Click <strong>Save to Lead Inbox</strong>.</li>
+        <li>Go to <strong>Lead Inbox</strong> → open the lead → update status.</li>
+        <li>Go to <strong>Content Engine</strong> → generate a multi‑platform kit.</li>
+        <li>(Admin role) submit a draft → approve it in <strong>Admin</strong>.</li>
+      </ol>
+      <div class="row" style="margin-top:10px; flex-wrap:wrap">
+        <a class="btn" href="snapshot-builder.html">Start with Snapshot</a>
+        <a class="btn" href="content-engine.html">Start with Content</a>
+      </div>
+    </div>
+
+    <div class="card pad" style="margin-top:12px">
+      <div class="h3">Where to customize</div>
+      <div class="muted small">Admin → Settings (booking link, site URL, phone).</div>
+      <div class="muted small">Brand + Compliance toggles are in the top bar.</div>
+    </div>
+
+    <div class="card pad" style="margin-top:12px">
+      <div class="h3">Tomorrow morning upgrade path</div>
+      <div class="muted small">Replace template generation with real AI + sync leads to your CRM/SMS.</div>
+    </div>
+  </div>
+</div>
+
+<div id="modal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:100">
+  <div class="container" style="max-width:980px; margin-top:60px">
+    <div class="card pad">
+      <div class="row between">
+        <div class="h2" id="modalTitle">—</div>
+        <button class="btn" id="close">Close</button>
+      </div>
+      <hr/>
+      <div class="copy" id="modalBody">—</div>
+    </div>
+  </div>
+</div>
+
+    <div class="footer muted">
+      Prototype only (localStorage). Perfect for GitHub Pages demos; plug in CRM/SMS/AI later.
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const s = MS.loadState();
+      const t = document.getElementById("weeklyThemeTitle");
+      const f = document.getElementById("weeklyThemeFocus");
+      if(t) t.textContent = s.weeklyTheme.title || "Weekly Theme";
+      if(f) f.textContent = s.weeklyTheme.focus || "";
+    });
+  </script>
+  
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  const modal = document.getElementById("modal");
+  const title = document.getElementById("modalTitle");
+  const body = document.getElementById("modalBody");
+  const close = ()=> modal.style.display="none";
+  document.getElementById("close").onclick=close;
+
+  document.getElementById("seed").onclick=()=>{
+    localStorage.removeItem("ms_ai_suite_v1");
+    MS.toast("Demo data reset. Reloading...");
+    setTimeout(()=>location.reload(), 600);
+  };
+
+  document.getElementById("howto").onclick=()=>{
+    title.textContent = "GitHub Pages quick steps";
+    body.textContent =
+`1) Create a new GitHub repo (public is easiest for Pages).
+2) Upload ALL files from this folder (keep structure).
+3) Repo Settings → Pages:
+   • Build and deployment: Deploy from a branch
+   • Branch: main /root
+4) Wait for the Pages URL (it will show in the Pages section).
+5) Open the URL and test:
+   • index.html → Enter Suite
+
+Tip: If Pages isn’t showing, check you’re in the repo Settings (not profile settings).
+`;
+    modal.style.display="block";
+  };
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,205 @@
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Client Tools — Medi‑Solutions AI Agent Suite</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="row between" style="gap:14px; flex-wrap:wrap">
+        <div class="row" style="gap:12px">
+          <div class="badge"><span class="dot good"></span><strong>Medi‑Solutions</strong> <span class="muted small">AI Agent Suite (Prototype)</span></div>
+          <div class="badge"><span class="dot"></span><span id="brandLabel">—</span></div>
+          <div class="badge"><span class="dot"></span><span id="roleLabel">AGENT</span></div>
+          <div class="badge"><span class="dot"></span><span id="complianceLabel">Compliance: On</span></div>
+        </div>
+        <div class="row" style="flex-wrap:wrap; justify-content:flex-end">
+          <select id="brandSelect" class="input" style="width:180px">
+            <option>Medi‑Solutions</option>
+            <option>First Jersey</option>
+            <option>Neutral Medicare Advisor</option>
+          </select>
+          <select id="roleSelect" class="input" style="width:140px">
+            <option value="agent">Agent</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button class="btn" id="toggleCompliance">Compliance</button>
+          <button class="btn" id="toggleTheme">Theme: <span id="themeLabel">Dark</span></button>
+        </div>
+      </div>
+      <div class="row between" style="margin-top:12px; gap:12px; flex-wrap:wrap">
+        <div class="nav" style="flex:1">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="content-engine.html">Content Engine</a>
+          <a href="sales-coach.html">Sales Coach</a>
+          <a href="client-tools.html">Client Tools</a>
+          <a href="snapshot-builder.html">Snapshot Builder</a>
+          <a href="leads.html">Lead Inbox</a>
+          <a href="library.html">Library</a>
+          <a href="admin.html" data-role="admin,manager">Admin</a>
+        </div>
+        <div class="badge" style="min-width:260px">
+          <span class="dot warn"></span>
+          <div class="col" style="gap:2px">
+            <div class="small"><strong id="weeklyThemeTitle">Weekly Theme</strong></div>
+            <div class="muted small" id="weeklyThemeFocus">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+<div class="row between" style="align-items:flex-end; flex-wrap:wrap">
+  <div>
+    <div class="h1">Client Tools</div>
+    <div class="muted">Quick calculators + decision helpers (prototype).</div>
+  </div>
+  <a class="btn primary" href="snapshot-builder.html">Go to Snapshot Builder</a>
+</div>
+
+<div class="grid cols-3" style="margin-top:16px">
+  <div class="card pad">
+    <div class="h2">IRMAA Explainer</div>
+    <div class="muted small">A quick, plain-English explanation to copy into emails or posts.</div>
+    <hr/>
+    <div class="copy" id="irmaaText">—</div>
+    <div class="row" style="margin-top:10px; flex-wrap:wrap">
+      <button class="btn" id="copyIrmaa">Copy</button>
+      <a class="btn" href="content-engine.html">Create content</a>
+    </div>
+  </div>
+
+  <div class="card pad">
+    <div class="h2">Employer Coverage Check</div>
+    <div class="muted small">High-level: 20+ employee rule prompt for clients.</div>
+    <hr/>
+    <label>Still working?</label>
+    <select class="input" id="work">
+      <option>No</option>
+      <option>Yes</option>
+    </select>
+    <label style="margin-top:10px">Employer size</label>
+    <select class="input" id="size">
+      <option>Under 20</option>
+      <option selected>20+</option>
+      <option>Not sure</option>
+    </select>
+    <div class="row" style="margin-top:10px">
+      <button class="btn primary" id="eval">Generate guidance</button>
+      <button class="btn" id="copyEval">Copy</button>
+    </div>
+    <div class="card pad" style="margin-top:12px">
+      <div class="copy" id="evalOut">—</div>
+    </div>
+  </div>
+
+  <div class="card pad">
+    <div class="h2">Part D OOP Cap</div>
+    <div class="muted small">Editable yearly for planning conversations.</div>
+    <hr/>
+    <label>Year</label>
+    <input id="capYear" class="input" value="2026"/>
+    <label style="margin-top:10px">Out-of-pocket cap</label>
+    <input id="capAmt" class="input" value="$2,100"/>
+    <div class="row" style="margin-top:10px">
+      <button class="btn primary" id="saveCap">Save</button>
+      <button class="btn" id="copyCap">Copy</button>
+    </div>
+    <div class="muted small" style="margin-top:10px">Saved locally.</div>
+  </div>
+</div>
+
+<div class="card pad" style="margin-top:16px">
+  <div class="h2">Retirement Budget Reminder</div>
+  <div class="muted small">A short checklist your team can send to clients.</div>
+  <hr/>
+  <div class="copy" id="budgetText">—</div>
+  <div class="row" style="margin-top:10px">
+    <button class="btn" id="copyBudget">Copy</button>
+  </div>
+</div>
+
+    <div class="footer muted">
+      Prototype only (localStorage). Perfect for GitHub Pages demos; plug in CRM/SMS/AI later.
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const s = MS.loadState();
+      const t = document.getElementById("weeklyThemeTitle");
+      const f = document.getElementById("weeklyThemeFocus");
+      if(t) t.textContent = s.weeklyTheme.title || "Weekly Theme";
+      if(f) f.textContent = s.weeklyTheme.focus || "";
+    });
+  </script>
+  
+<script>
+document.addEventListener("DOMContentLoaded", ()=>{
+  const s = MS.loadState();
+  const cap = JSON.parse(localStorage.getItem("ms_partd_cap")||"null") || {year:"2026", amt:"$2,100"};
+  document.getElementById("capYear").value = cap.year;
+  document.getElementById("capAmt").value = cap.amt;
+
+  const irmaa = [
+    "IRMAA is an income-related adjustment added to your Medicare Part B and Part D premiums.",
+    "It’s based on a prior-year tax return (Medicare uses a lookback).",
+    "If income dropped due to a life-changing event (retirement, etc.), you may be able to request a reduction.",
+    s.session.complianceMode ? "\n" + s.templates.compliancePhrases[0] : ""
+  ].join("\n");
+  document.getElementById("irmaaText").textContent = irmaa;
+  document.getElementById("copyIrmaa").onclick=()=>MS.copyToClipboard(irmaa);
+
+  document.getElementById("eval").onclick=()=>{
+    const work = document.getElementById("work").value;
+    const size = document.getElementById("size").value;
+    let out = "";
+    if(work==="Yes" && size==="20+"){
+      out = "If your employer has 20+ employees, you may be able to delay Part B without penalty (confirm with HR and your plan). When coverage ends, you typically get a Special Enrollment Period.";
+    } else if(work==="Yes" && size==="Under 20"){
+      out = "If your employer has under 20 employees, Medicare often becomes primary at 65. It’s important to confirm timing to avoid coverage gaps.";
+    } else {
+      out = "If you’re not working, we should align your Part B start date with your timeline and make sure you have drug coverage planning in place.";
+    }
+    if(s.session.complianceMode) out += "\n\n" + s.templates.compliancePhrases[2];
+    document.getElementById("evalOut").textContent = out;
+    window.__evalOut = out;
+  };
+  document.getElementById("copyEval").onclick=()=>MS.copyToClipboard(window.__evalOut||"");
+
+  document.getElementById("saveCap").onclick=()=>{
+    const cap2 = {year: document.getElementById("capYear").value, amt: document.getElementById("capAmt").value};
+    localStorage.setItem("ms_partd_cap", JSON.stringify(cap2));
+    MS.toast("Saved.");
+  };
+  document.getElementById("copyCap").onclick=()=>{
+    const y = document.getElementById("capYear").value;
+    const a = document.getElementById("capAmt").value;
+    MS.copyToClipboard(`Part D out-of-pocket cap for ${y}: ${a} (confirm current year rules when reviewing).`);
+  };
+
+  const budget = [
+    "Retirement budget checklist:",
+    "• Housing (mortgage/rent, taxes, insurance, utilities)",
+    "• Healthcare (Part B premium, IRMAA if applicable, Part D, copays)",
+    "• Travel & lifestyle",
+    "• Family support / unforeseen expenses",
+    "• Subscriptions & debt",
+    "",
+    "Want a personalized snapshot + budget tool? Start here: " + s.settings.siteUrl + "/ai-advisor"
+  ].join("\n");
+  document.getElementById("budgetText").textContent = budget;
+  document.getElementById("copyBudget").onclick=()=>MS.copyToClipboard(budget);
+});
+</script>
+
+</body>
+</html>

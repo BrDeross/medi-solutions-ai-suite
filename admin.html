@@ -1,0 +1,274 @@
+
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Admin — Medi‑Solutions AI Agent Suite</title>
+  <link rel="stylesheet" href="assets/css/styles.css"/>
+</head>
+<body>
+  <div class="topbar">
+    <div class="container">
+      <div class="row between" style="gap:14px; flex-wrap:wrap">
+        <div class="row" style="gap:12px">
+          <div class="badge"><span class="dot good"></span><strong>Medi‑Solutions</strong> <span class="muted small">AI Agent Suite (Prototype)</span></div>
+          <div class="badge"><span class="dot"></span><span id="brandLabel">—</span></div>
+          <div class="badge"><span class="dot"></span><span id="roleLabel">AGENT</span></div>
+          <div class="badge"><span class="dot"></span><span id="complianceLabel">Compliance: On</span></div>
+        </div>
+        <div class="row" style="flex-wrap:wrap; justify-content:flex-end">
+          <select id="brandSelect" class="input" style="width:180px">
+            <option>Medi‑Solutions</option>
+            <option>First Jersey</option>
+            <option>Neutral Medicare Advisor</option>
+          </select>
+          <select id="roleSelect" class="input" style="width:140px">
+            <option value="agent">Agent</option>
+            <option value="manager">Manager</option>
+            <option value="admin">Admin</option>
+          </select>
+          <button class="btn" id="toggleCompliance">Compliance</button>
+          <button class="btn" id="toggleTheme">Theme: <span id="themeLabel">Dark</span></button>
+        </div>
+      </div>
+      <div class="row between" style="margin-top:12px; gap:12px; flex-wrap:wrap">
+        <div class="nav" style="flex:1">
+          <a href="dashboard.html">Dashboard</a>
+          <a href="content-engine.html">Content Engine</a>
+          <a href="sales-coach.html">Sales Coach</a>
+          <a href="client-tools.html">Client Tools</a>
+          <a href="snapshot-builder.html">Snapshot Builder</a>
+          <a href="leads.html">Lead Inbox</a>
+          <a href="library.html">Library</a>
+          <a href="admin.html" data-role="admin,manager">Admin</a>
+        </div>
+        <div class="badge" style="min-width:260px">
+          <span class="dot warn"></span>
+          <div class="col" style="gap:2px">
+            <div class="small"><strong id="weeklyThemeTitle">Weekly Theme</strong></div>
+            <div class="muted small" id="weeklyThemeFocus">—</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+
+<div class="row between" style="align-items:flex-end; flex-wrap:wrap">
+  <div>
+    <div class="h1">Admin Console</div>
+    <div class="muted">Weekly themes, booking link, approvals queue (prototype).</div>
+  </div>
+  <span class="badge"><span class="dot warn"></span><span class="small">Visible to Admin/Manager roles</span></span>
+</div>
+
+<div class="grid cols-2" style="margin-top:16px">
+  <div class="card pad">
+    <div class="h2">Weekly Theme</div>
+    <div class="muted small">This drives the Dashboard “Today’s Focus.”</div>
+    <hr/>
+    <label>Title</label>
+    <input class="input" id="wtTitle"/>
+    <label style="margin-top:10px">Pillar</label>
+    <select class="input" id="wtPillar"></select>
+    <label style="margin-top:10px">Focus</label>
+    <textarea class="input" id="wtFocus"></textarea>
+    <div class="row" style="margin-top:12px; flex-wrap:wrap">
+      <button class="btn primary" id="saveTheme">Save theme</button>
+    </div>
+  </div>
+
+  <div class="card pad">
+    <div class="h2">Settings</div>
+    <div class="muted small">Used across the suite.</div>
+    <hr/>
+    <label>Booking URL</label>
+    <input class="input" id="bookingUrl"/>
+    <label style="margin-top:10px">Advisor email</label>
+    <input class="input" id="advisorEmail"/>
+    <label style="margin-top:10px">Advisor phone</label>
+    <input class="input" id="advisorPhone"/>
+    <label style="margin-top:10px">Website URL</label>
+    <input class="input" id="siteUrl"/>
+    <div class="row" style="margin-top:12px; flex-wrap:wrap">
+      <button class="btn primary" id="saveSettings">Save settings</button>
+      <button class="btn danger" id="factoryReset">Factory reset</button>
+    </div>
+  </div>
+</div>
+
+<div class="card pad" style="margin-top:16px">
+  <div class="row between">
+    <div>
+      <div class="h2">Approvals Queue</div>
+      <div class="muted small">Drafts submitted from the Content Engine.</div>
+    </div>
+    <button class="btn" id="refresh">Refresh</button>
+  </div>
+  <hr/>
+  <div id="queue"></div>
+</div>
+
+<div id="approvalModal" style="display:none; position:fixed; inset:0; background:rgba(0,0,0,.55); z-index:100">
+  <div class="container" style="max-width:980px; margin-top:60px">
+    <div class="card pad">
+      <div class="row between">
+        <div class="h2">Review Draft</div>
+        <button class="btn" id="closeApproval">Close</button>
+      </div>
+      <hr/>
+      <div id="approvalBody"></div>
+      <div class="row" style="margin-top:12px; flex-wrap:wrap">
+        <button class="btn good" id="approve">Approve</button>
+        <button class="btn danger" id="reject">Reject</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+    <div class="footer muted">
+      Prototype only (localStorage). Perfect for GitHub Pages demos; plug in CRM/SMS/AI later.
+    </div>
+  </div>
+
+  <script src="assets/js/app.js"></script>
+  <script>
+    document.addEventListener("DOMContentLoaded", ()=>{
+      const s = MS.loadState();
+      const t = document.getElementById("weeklyThemeTitle");
+      const f = document.getElementById("weeklyThemeFocus");
+      if(t) t.textContent = s.weeklyTheme.title || "Weekly Theme";
+      if(f) f.textContent = s.weeklyTheme.focus || "";
+    });
+  </script>
+  
+<script>
+function fillPillars(){
+  const s = MS.loadState();
+  const el = document.getElementById("wtPillar");
+  el.innerHTML = s.templates.pillars.map(p=>`<option>${p.name}</option>`).join("");
+}
+function loadForm(){
+  const s = MS.loadState();
+  document.getElementById("wtTitle").value = s.weeklyTheme.title || "";
+  document.getElementById("wtPillar").value = s.weeklyTheme.pillar || s.templates.pillars[0].name;
+  document.getElementById("wtFocus").value = s.weeklyTheme.focus || "";
+
+  document.getElementById("bookingUrl").value = s.settings.bookingUrl || "";
+  document.getElementById("advisorEmail").value = s.settings.advisorEmail || "";
+  document.getElementById("advisorPhone").value = s.settings.advisorPhone || "";
+  document.getElementById("siteUrl").value = s.settings.siteUrl || "";
+}
+function renderQueue(){
+  const s = MS.loadState();
+  const q = s.approvals || [];
+  const rows = q.slice(0,10).map(a=>{
+    const d = (s.contentDrafts||[]).find(x=>x.id===a.draftId);
+    const topic = d?.payload?.topic || "—";
+    const pillar = d?.payload?.pillar || "—";
+    return `<tr>
+      <td>${MS.escapeHtml(pillar)}</td>
+      <td>${MS.escapeHtml(topic)}</td>
+      <td><span class="pill warn">${MS.escapeHtml(a.status||"Pending")}</span></td>
+      <td class="small muted">${MS.formatDate(a.submittedAt)}</td>
+      <td><button class="btn" data-open="${a.id}">Review</button></td>
+    </tr>`;
+  }).join("");
+  document.getElementById("queue").innerHTML = `
+    <table class="table">
+      <thead><tr><th>Pillar</th><th>Topic</th><th>Status</th><th>Submitted</th><th></th></tr></thead>
+      <tbody>${rows || ""}</tbody>
+    </table>`;
+  document.querySelectorAll("button[data-open]").forEach(b=>b.onclick=()=>openApproval(b.dataset.open));
+}
+function openApproval(approvalId){
+  const s = MS.loadState();
+  const a = (s.approvals||[]).find(x=>x.id===approvalId);
+  if(!a) return;
+  const d = (s.contentDrafts||[]).find(x=>x.id===a.draftId);
+  window.__approvalId = approvalId;
+
+  const body = document.getElementById("approvalBody");
+  body.innerHTML = `
+    <div class="row between">
+      <div>
+        <div class="h2">${MS.escapeHtml(d?.payload?.topic || "")}</div>
+        <div class="muted small">${MS.escapeHtml(d?.payload?.pillar || "")} • ${MS.escapeHtml(d?.payload?.tone || "")}</div>
+      </div>
+      <button class="btn" id="copyDraftAll">Copy All</button>
+    </div>
+    <hr/>
+    <div class="card pad"><div class="h3">Script</div><div class="copy">${MS.escapeHtml(d?.outputs?.script||"")}</div></div>
+    <div class="card pad" style="margin-top:12px"><div class="h3">Caption</div><div class="copy">${MS.escapeHtml(d?.outputs?.caption||"")}</div></div>
+  `;
+  document.getElementById("approvalModal").style.display="block";
+  document.getElementById("copyDraftAll").onclick=()=>{
+    const o = d.outputs || {};
+    const all = `=== SCRIPT ===\n${o.script||""}\n\n=== CAPTION ===\n${o.caption||""}\n\n=== LINKEDIN ===\n${o.linkedin||""}\n\n=== EMAIL ===\n${o.email||""}\n\n=== BLOG ===\n${o.blog||""}`;
+    MS.copyToClipboard(all);
+  };
+}
+function closeApproval(){ document.getElementById("approvalModal").style.display="none"; }
+
+document.addEventListener("DOMContentLoaded", ()=>{
+  fillPillars();
+  loadForm();
+
+  document.getElementById("saveTheme").onclick=()=>{
+    MS.updateState(st=>{
+      st.weeklyTheme = {
+        title: document.getElementById("wtTitle").value,
+        pillar: document.getElementById("wtPillar").value,
+        focus: document.getElementById("wtFocus").value,
+        updatedAt: new Date().toISOString()
+      };
+    });
+    MS.toast("Theme saved. Go to Dashboard to see it.");
+  };
+
+  document.getElementById("saveSettings").onclick=()=>{
+    MS.updateState(st=>{
+      st.settings.bookingUrl = document.getElementById("bookingUrl").value;
+      st.settings.advisorEmail = document.getElementById("advisorEmail").value;
+      st.settings.advisorPhone = document.getElementById("advisorPhone").value;
+      st.settings.siteUrl = document.getElementById("siteUrl").value;
+    });
+    MS.toast("Settings saved.");
+  };
+
+  document.getElementById("factoryReset").onclick=()=>{
+    localStorage.removeItem("ms_ai_suite_v1");
+    MS.toast("Reset. Reload the page.");
+  };
+
+  document.getElementById("refresh").onclick=renderQueue;
+  document.getElementById("closeApproval").onclick=closeApproval;
+  document.getElementById("approve").onclick=()=>{
+    const id = window.__approvalId;
+    if(!id) return;
+    MS.updateState(st=>{
+      const a = st.approvals.find(x=>x.id===id);
+      if(a) a.status="Approved";
+    });
+    MS.toast("Approved.");
+    closeApproval(); renderQueue();
+  };
+  document.getElementById("reject").onclick=()=>{
+    const id = window.__approvalId;
+    if(!id) return;
+    MS.updateState(st=>{
+      const a = st.approvals.find(x=>x.id===id);
+      if(a) a.status="Rejected";
+    });
+    MS.toast("Rejected.");
+    closeApproval(); renderQueue();
+  };
+
+  renderQueue();
+});
+</script>
+
+</body>
+</html>
